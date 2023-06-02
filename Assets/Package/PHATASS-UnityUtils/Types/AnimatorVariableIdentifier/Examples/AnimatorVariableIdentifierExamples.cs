@@ -1,7 +1,10 @@
+#define PHATASS_EXAMPLES_TOKEN
+#if !PHATASS_EXAMPLES_TOKEN
+
 /*    PHATASS Studios 2023    */
 //
 //	EXAMPLE CODE - FEEL FREE TO REMOVE OR NOT IMPORT THIS FILE IF IT'S NOT NEEDED
-//	these MonoBehaviours do not run as-is, and are only for illustrative purposes
+//	these MonoBehaviours do not run as-is, and are only for illustrative purposes. Code can be freely copypasted however.
 //
 //	AnimatorVariableIdentifier is a type handling the (de)serialization of the identifier for a UnityEngine.Animator variable name
 //	this serializes the variable name as a string for editor purposes, then exposes the identifier as the more efficient hash
@@ -100,4 +103,51 @@ namespace Examples.AnimatorVariableIdentifierExamples
 		}
 	}
 //ENDOF SAMPLE C
+
+// ADDITIONAL EXAMPLES
+	// The AnimatorVariableIdentifier type can be used to access animator variables of any type
+	// Both setting and getting are supported
+	public class AnimatorVariableIdentifier_TypeFlexibility : MonoBehaviour
+	{
+		[SerializeField]
+		public AnimatorVariableIdentifier animatorVariableID = "VariableName";	//We can easily initialize with a string - Serialized fields can be normally edited with a string box
+
+		[SerializeField]
+		public Animator animator;
+
+		private void AnimatorVariableAccessExample ()
+		{
+		// bool
+			bool boolValue = this.animator.GetBool(this.animatorVariableID);	//https://docs.unity3d.com/ScriptReference/Animator.GetBool.html
+			this.animator.SetBool(this.animatorVariableID, boolValue);			//https://docs.unity3d.com/ScriptReference/Animator.SetBool.html
+
+		// int
+			int intValue = this.animator.GetInteger(this.animatorVariableID);	//https://docs.unity3d.com/ScriptReference/Animator.GetInteger.html
+			this.animator.SetInteger(this.animatorVariableID, intValue);		//https://docs.unity3d.com/ScriptReference/Animator.SetInteger.html		
+
+		// float
+			float floatValue = this.animator.GetFloat(this.animatorVariableID);	//https://docs.unity3d.com/ScriptReference/Animator.GetFloat.html
+			this.animator.SetFloat(this.animatorVariableID, floatValue);		//https://docs.unity3d.com/ScriptReference/Animator.SetFloat.html
+
+		// trigger
+			this.animator.SetTrigger(this.animatorVariableID);					//https://docs.unity3d.com/ScriptReference/Animator.SetTrigger.html
+			this.animator.ResetTrigger(this.animatorVariableID);				//https://docs.unity3d.com/ScriptReference/Animator.ResetTrigger.html
+		}
+	}
+
+	// Neither Variable string name, variable hash ID, nor any other members are exposed publicly except through the implicit from string and to int conversions
+	// However, they can be accessed by casting the AnimatorVariableIdentifier object as the appropriate IAnimatorVariableIdentifier interface
+	public class AnimatorVariableIdentifier_InterfaceCasting : MonoBehaviour
+	{
+		[SerializeField]
+		public AnimatorVariableIdentifier animatorVariableID = "VariableName";	//We can easily initialize with a string - Serialized fields can be normally edited with a string box
+
+		private void LogVariableIDValues ()
+		{
+			Debug.Log((animatorVariableID as IAnimatorVariableIdentifier).variableName);	//prints "VariableName"
+			Debug.Log((animatorVariableID as IAnimatorVariableIdentifier).variableID);		//prints the hash value of "VariableName"
+		}
+	}
+//ENDOF ADDITIONAL EXAMPLES
 }
+#endif
