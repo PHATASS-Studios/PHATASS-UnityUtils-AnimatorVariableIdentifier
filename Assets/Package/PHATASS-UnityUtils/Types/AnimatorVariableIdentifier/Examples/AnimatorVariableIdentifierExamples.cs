@@ -88,6 +88,7 @@ namespace Examples.AnimatorVariableIdentifierExamples
 //ENDOF SAMPLE B
 
 // SAMPLE C: using AnimatorVariableIdentifier - FAST, LEAN, AND CLEAR CODE
+// 	remember the import on top of the file if necessary! => using AnimatorVariableIdentifier = PHATASS.Utils.Types.AnimatorVariableIdentifier;
 	public class AnimatorVariableAccess_UsingAnimatorVariableIdentifier : MonoBehaviour
 	{
 		[SerializeField]
